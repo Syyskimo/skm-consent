@@ -6,15 +6,6 @@ This is a webcomponent thingybob done with [Svelte](https://svelte.dev). It (tri
 *Note that you will need to have [Node.js](https://nodejs.org) installed.*
 
 *Except, if you don't want to. You can just get wicked pre-build javascript*
-## Get started the easy way
-
-1. Just import the public/build/bundle.js to any webpage/service/store/whatever
-2. Add <skm-consent> with needed params and <skm-cookie>:s
-3. Come back here, for you don't know what they are
-4. See the public/index.html for example.
-5. Wait for me finish the product so you can get better documentation
-6. ...
-7. No profit
 
 
 ## Get started with development
@@ -39,6 +30,17 @@ By default, the server will only respond to requests from localhost. To allow co
 If you're using [Visual Studio Code](https://code.visualstudio.com/) ~~we~~ the Svelte-guys, from whom I copied the base for readme, recommend installing the official extension [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode). If you are using other editors you may need to install a plugin in order to get syntax highlighting and intellisense.
 
 And if you're using webstorm etc JetBrains stack, try to navigate to "plugins" and search for "svelte". Isn't really that hard.
+
+
+## What to do after that?
+
+1. Just import the public/build/bundle.js to any webpage/service/store/whatever
+2. Add <skm-consent> with needed params and <skm-cookie>:s
+3. Come back here, for you don't know what they are
+4. See the public/index.html for example.
+5. Wait for me finish the product so you can get better documentation
+6. ...
+7. No profit
 
 ## Building and running in production mode
 
