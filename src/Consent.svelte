@@ -5,25 +5,38 @@
 	import fix from './transfix.js'
 	import {setCookie, getCookie, isBlank} from './cookie_utlis';
 
-	export let title = 'awesome cookie handler!';
+	/* Name of the cookie, that's used check and save to choises */
 	export let consentcookie = 'skm-cookie';
+
+	/* Texts used in component */
 	export let textrequired = 'Agree required';
 	export let textdefault = 'Agree preferred';
 	export let textoptional = 'Agree all';
-	export let texttoggle = '';
+	export let texttogglemore = '';
+	export let texttoggleless = 'Hide details';
 	export let textchosen = 'Agree on chosen';
+
+	/* Debug (show some debug info in console, if in use */
 	export let debug = false;
 
 	// texts and types could be wrapped in object/arrays
 	// but then again it makes code somewhat not-easy-to-read
+	// and might have issues with Svelte's value-checking (or might not, don't want to test :D)
 	// so let's go with this ugly way (may differ in future)
 
+	// which options are available
+	// checked in mount ("constructor")
 	let optionRequired = false;
 	let optionOptional = false;
 	let optionDefault = false;
+
+	// toggle for showing the extra-info
 	let showExtra = false;
+	// Is the whole cookie consent show at all
 	let shown = false;
 
+	// the cookies within
+	// populated when cookies inform about themselves
 	const cookies = {};
 
 
@@ -34,6 +47,7 @@
 
 	function handleCookie(event)
 	{
+		event.stopPropagation();
 		cookies[event.detail.cookie] = {name: event.detail.cookie, value: event.detail.val, type: event.detail.type};
 		checkState();
 	}
@@ -54,8 +68,9 @@
 		let event = new CustomEvent('skmcookieconsent', {
 			detail: {'agreed': agreed, 'allCookies': cookies},
 			bubbles: true,
-			composed: true, // needed for the event to traverse beyond shadow dom
-		})
+			composed: true,
+		});
+
 		dispatchEvent(event);
 		if (debug) {
 			console.log("Consent got to:");
@@ -88,7 +103,7 @@
 	onMount(async () => {
 		await tick();
 		shown = isBlank(getCookie(consentcookie));
-		if (debug) {
+		if (!shown && debug) {
 			console.log('Debug cookie-clear enabled, refresh page to see cookie-consent');
 			setCookie(consentcookie, "");
 		}
@@ -97,7 +112,7 @@
 <svelte:window on:skmcookie={handleCookie}/>
 
 <div class="wrap" class:hidden={!shown}>
-	<h2 >{title}</h2>
+	<slot name="title"></slot>
 	<div class="basic" >
 		<slot class="shortdesc" name="shortdesc"></slot>
 	</div>
@@ -108,10 +123,9 @@
 	</div>
 {/if}
 	<div class="actionbar">
-		<div class="wrapstart" class:hidden={!texttoggle}>
-			<div class="button toggle" on:click={toggle}>{texttoggle}</div>
+		<div class="wrapstart" class:hidden={!texttogglemore}>
+			<div class="button toggle" on:click={toggle}>{showExtra ? texttoggleless : texttogglemore}</div>
 		</div>
-
 		<div class="button chosen" on:click={() => consent("chosen")} class:hidden={!showExtra} >{textchosen}</div>
 		<div class="button required" on:click={() => consent("required")} class:hidden={showExtra || !optionRequired}>{textrequired}</div>
 		<div class="button default" on:click={() => consent("default")} class:hidden={showExtra || !optionDefault}>{textdefault}</div>
@@ -124,11 +138,14 @@
 	* {
 		box-sizing: border-box;
 		font-family: var(--cookie-font, Verdana, sans-serif);
+		font: var(--skm-font, 16px);
+		color: var(--skm-color, black);
 	}
 	.actionbar {
 		display: flex;
 		align-items: flex-end;
 		justify-content: flex-end;
+		flex-wrap: wrap;
 		margin-top: 5px;
 	}
 	.button {
@@ -173,13 +190,15 @@
 		display: block;
 		left: 50%;
 		transform: translateX(-50%);
-		width: var(--cookie-width, 800px);
+		width: var(--skm-consent-max-width, 800px);
 		max-width: 100%;
 		padding: 20px;
+		max-height: calc(100% - 40px);
+		overflow-y: auto;
+		overflow-x: hidden;
 
-		background-color: var(--cookie-bg-color, white);
-		border: 4px solid;
-		border-color: var(--cookie-border-color, grey);
+		background: var(--skm-consent-bg, white);
+		border: var(--skm-consent-border, 4px solid grey);
 
 	}
 	.wrap.shown {

@@ -23,7 +23,7 @@ npm install
 npm run dev
 ```
 
-Navigate to [localhost:5000](http://localhost:5000), or whatever the node-monster tells you to. What you got there is just static html-file that uses the skm-cookie-consent 
+Navigate to [localhost:5000](http://localhost:5000), or whatever the node-monster tells you to. There will be found some examples on how to use 
 
 By default, the server will only respond to requests from localhost. To allow connections from other computers, edit the `sirv` commands in package.json to include the option `--host 0.0.0.0`. But then again. Why would you?
 
@@ -32,15 +32,39 @@ If you're using [Visual Studio Code](https://code.visualstudio.com/) ~~we~~ the 
 And if you're using webstorm etc JetBrains stack, try to navigate to "plugins" and search for "svelte". Isn't really that hard.
 
 
-## What to do after that?
-
+## How to use
 1. Just import the public/build/bundle.js to any webpage/service/store/whatever
-2. Add <skm-consent> with needed params and <skm-cookie>:s
-3. Come back here, for you don't know what they are
-4. See the public/index.html for example.
-5. Wait for me finish the product so you can get better documentation
-6. ...
-7. No profit
+2. Add <skm-consent> with needed params and <skm-cookie>s
+3. Listen for "skmcookieconsent" or read from cookie (see "consentcookie" -parameter) to know that consent is given. And then do the hussle and serve only the right cookies.
+
+
+## What is/are... 
+
+### ... Happening when consent is given
+Well, then we set the given cookies (the cookie-names) in the cookie. And also fire an event "skmcookieconsent"
+
+### ...The parameters for consents-component
+    debug="true", if wanted debug. Omit if not wanted
+    consentcookie="somecookiename", the name of cookie used (auto-save cookie with that name)
+    texttogglemore="text for toggle more info -button"
+    texttoggleless="text for toggle less info -button"
+    textrequired="Text to accept only the necessary"
+    textdefault="Text to accept the recommended"
+    textoptional="Text to accept everything"
+    textchosen = "Text to accept the chosen ones"
+
+### ... The css-variables used
+
+These are some examples
+
+    --skm-cookie-checked-color: green;
+    --skm-cookie-unchecked-color: red;
+    --skm-consent-border: 10px dashed red;
+    --skm-consent-max-width: 1200px;
+    --skm-consent-bg: rgba(255,255,255,0.8);
+    --skm-font: 16px/30px 'comic sans', cursive;
+    --skm-color: 'red';
+
 
 ## Building and running in production mode
 

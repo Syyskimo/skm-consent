@@ -45,17 +45,16 @@
 
     .option {
         display: flex;
-        line-height: 34px;
     }
     .option:hover {
         background-color: rgba(0,0,0,0.1);
     }
     .title {
-        font-size: 24px;
         flex-grow: 1;
+        font: var(--skm-font, 15px/16px);
     }
     .title.required:after {
-        color: var(--cookie-checked-color, #2196F3);;
+        color: var(--skm-cookie-checked-color, #2196F3);;
         content: ' *';
         display:inline;
     }
@@ -63,6 +62,7 @@
         position: relative;
         display: inline-block;
         width: 60px;
+        min-width: 60px;
         height: 34px;
     }
 
@@ -79,7 +79,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: var(--cookie-unchecked-color, #ccc);
+        background-color: var(--skm-cookie-unchecked-color, #ccc);
         -webkit-transition: .25s;
         transition: .25s;
     }
@@ -97,7 +97,7 @@
     }
 
     input:checked + .slider {
-        background-color: var(--cookie-checked-color, #2196F3);
+        background-color: var(--skm-cookie-checked-color, #2196F3);
     }
 
     input:focus + .slider {
