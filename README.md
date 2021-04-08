@@ -31,6 +31,9 @@ If you're using [Visual Studio Code](https://code.visualstudio.com/) ~~we~~ the 
 
 And if you're using webstorm etc JetBrains stack, try to navigate to "plugins" and search for "svelte". Isn't really that hard.
 
+## Demo
+
+https://syyskimo.github.io/index.html
 
 ## How to use
 1. Just import the public/build/bundle.js to any webpage/service/store/whatever
